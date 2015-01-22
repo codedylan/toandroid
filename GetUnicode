@@ -1,0 +1,13 @@
+   public static string GetUnicodeString(string hexString)
+        {
+           
+            string pattern = @"\\u[0-9a-fA-F]{4}";
+            MatchEvaluator evaluator = new MatchEvaluator(WordScrambler);
+            return Regex.Replace(hexString, pattern, evaluator);
+        }
+        public static string WordScrambler(Match match)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(char.ConvertFromUtf32(Int32.Parse(match.Value.Substring(2, 4), System.Globalization.NumberStyles.HexNumber)));
+            return sb.ToString();
+        }
